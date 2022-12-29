@@ -6,15 +6,28 @@ class Car{
         this.width=width;
         this.height=height;
         this.controls=new Controls();
+        this.speed=0;
+        this.acceleration=0.2;
+        this.maxSpeed=3;
+        this.maxReverseSpeed=-2;
     }
 
     update(){
+        // console.table(this);
         if(this.controls.forward){
-            this.y-=2;
+            this.speed+=this.acceleration;
         }
         if(this.controls.reverse){
-            this.y+=2;
+            this.speed-=this.acceleration;
         }
+        if(this.speed>this.maxSpeed){
+            this.speed=this.maxSpeed;
+        }
+        if(this.speed<this.maxReverseSpeed){
+            this.speed=this.maxReverseSpeed;
+        }
+
+        this.y-=this.speed;
     }
     draw(ctx){
         ctx.beginPath();
