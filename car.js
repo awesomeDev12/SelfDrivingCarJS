@@ -11,6 +11,7 @@ class Car{
         this.maxSpeed=3;
         this.maxReverseSpeed=-2;
         this.friction=0.1;
+        this.angle=0;
     }
 
     update(){
@@ -28,7 +29,6 @@ class Car{
             this.speed=this.maxReverseSpeed;
         }
         
-        this.y-=this.speed;
 
         //friction
         //kinetic friction
@@ -49,22 +49,32 @@ class Car{
         }
 
         if(this.controls.left){
-            this.x-=2;
+            // this.x-=2;
+            this.angle+=0.05;
         }
         if(this.controls.right){
-            this.x+=2;
+            // this.x+=2;
+            this.angle-=0.05;
         }
+        
+        this.x-=Math.sin(this.angle)*this.speed;
+        this.y-=Math.cos(this.angle)*this.speed;
+        // this.y-=this.speed;
+
     }
 
     draw(ctx){
+        ctx.translate(this.x,this.y);
+        ctx.rotate(-this.angle)
         ctx.beginPath();
         ctx.rect(
-            this.x-this.width/2,
-            this.y-this.height/2,
+            -this.width/2,
+            -this.height/2,
             this.width,
             this.height
         )
         ctx.fill();
+        ctx.restore();
     }
 
 
